@@ -24,7 +24,6 @@ export const createLocation = asyncHandler(
       timeStamps,
       isCheck,
     });
-
     const newLocation = new Location({
       latitude,
       longitude,
@@ -33,7 +32,6 @@ export const createLocation = asyncHandler(
       createdAt: new Date(),
     });
     const savedLocation = await newLocation.save();
-
     res.status(201).json(savedLocation);
   }
 );

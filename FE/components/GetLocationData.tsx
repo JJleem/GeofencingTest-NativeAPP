@@ -3,7 +3,7 @@ import axios from "axios";
 import { LocationText, MainView } from "../App";
 import { ObjectId } from "mongodb";
 import { View } from "react-native";
-
+import * as Location from "expo-location";
 interface locationdata {
   _id: ObjectId;
   latitude: number;
@@ -11,8 +11,11 @@ interface locationdata {
   timeStamps: number | undefined;
   isCheck: boolean;
 }
+interface LocationProps {
+  location: Location.LocationObject | null; // location prop의 타입 정의
+}
 
-const GetLocationData = () => {
+const GetLocationData: React.FC<LocationProps> = ({ location }) => {
   const [locationData, setLocationData] = useState<locationdata[]>([]);
   const getData = async () => {
     try {
@@ -30,11 +33,11 @@ const GetLocationData = () => {
     }, 5000); // 5초마다 데이터 요청
 
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 타이머 정리
-  }, []);
+  }, [location]);
   console.log("받아온데이터", locationData);
 
   const renderLocationData = () => {
-    return locationData.map((data) => (
+    return locationData.slice(0, 1).map((data) => (
       <View key={data._id.toString()} style={{ paddingVertical: 10 }}>
         <LocationText>Latitude: {data.latitude}</LocationText>
         <LocationText>Longitude: {data.longitude}</LocationText>

@@ -13,7 +13,7 @@ import GetLocationData from "./components/GetLocationData";
 const sendLocationData = async (
   latitude: number,
   longitude: number,
-  timeStamps: number | undefined,
+  timeStamps: string | null,
   isCheck: boolean
 ) => {
   try {
@@ -118,7 +118,7 @@ export default function App() {
           sendLocationData(
             location?.coords.latitude ?? 0,
             location?.coords.longitude ?? 0,
-            location?.timestamp, // 또는 다른 적절한 값으로 변경
+            timestampString, // 또는 다른 적절한 값으로 변경
             isInsideGeofence
           );
         }
@@ -159,11 +159,9 @@ export default function App() {
         setErrorMsg("위치 권한이 필요합니다!");
         return;
       }
-
       const currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
     };
-
     askForLocationPermission();
   }, []);
 
@@ -265,7 +263,7 @@ export default function App() {
           <LocationText>경도: Test</LocationText>
         </>
       )}
-      <GetLocationData />
+      <GetLocationData location={location} />
     </MainView>
   );
 }
