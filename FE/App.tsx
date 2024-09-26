@@ -80,7 +80,7 @@ export default function App() {
   const [timestampString, setTimestampString] = useState<string | null>(null);
   const [permissionGranted, setPermissionGranted] = useState(false); // 사용자 인증 수락여부
   const [isInsideGeofence, setIsInsideGeofence] = useState(false); // 범위안에들어왔는지 아닌지
-
+  console.log(location);
   /// 앱 시작하자마자 Permission을 받아오고 수락한다면 현재위치를 location에 저장하는 함수
   useEffect(() => {
     const askForLocationPermission = async () => {
@@ -95,6 +95,7 @@ export default function App() {
     };
     askForLocationPermission();
   }, []);
+
   /// 앱 시작하자마자 Permission을 받아오고 수락한다면 현재위치를 location에 저장하는 함수
   useEffect(() => {
     if (permissionGranted) {
@@ -167,6 +168,7 @@ export default function App() {
 
   const polygonCoords = createSquare(GEOFENCE_REGION);
   const polygonCoordsTWO = createSquare(GEOFENCE_REGIONTWO);
+
   const sendNotification = async (message: string) => {
     await Notifications.scheduleNotificationAsync({
       content: {
